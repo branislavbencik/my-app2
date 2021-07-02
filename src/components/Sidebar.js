@@ -17,9 +17,25 @@ export const Sidebar = ({ archStyles, setCurrentStyle, selectedLocation }) => {
             alt={singleLocation[0].image}
           />
           <h2>{singleLocation[0].placeName}</h2>
-          <p>{singleLocation[0].style}</p>
-          <p>{singleLocation[0].address}</p>
-          <p>{singleLocation[0].erected}</p>
+          {singleLocation[0].style && (
+            <div class="single-with-icon">
+              <img src="images/archstyle.svg" />
+              <p>{singleLocation[0].style}</p>
+            </div>
+          )}
+          {singleLocation[0].address && (
+            <div class="single-with-icon">
+              <img src="images/location.svg" />
+              <p>{singleLocation[0].address}</p>
+            </div>
+          )}
+          {singleLocation[0].erected && (
+            <div class="single-with-icon">
+              <img src="images/calendar.svg" />
+              <p>{singleLocation[0].erected}</p>
+            </div>
+          )}
+
           <p className="style_description">{singleLocation[0].description}</p>
         </div>
       </div>
