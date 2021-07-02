@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from "react";
-import {  
+import {
   GoogleMap,
   useLoadScript,
   InfoWindow,
@@ -13,10 +13,9 @@ import "./Map.scss";
 
 import mapStyles from "./mapStyles";
 
-
 const libraries = ["places"];
 const mapContainerStyle = {
-    height: "100vh",
+  height: "100vh",
 };
 const center = {
   lat: 50.0871,
@@ -25,7 +24,8 @@ const center = {
 
 export default function Map(props) {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY, mapIds: ["468d7e38db822065"], 
+    googleMapsApiKey: "AIzaSyBnyviMBVlSKf773qZ-Zzji-zb03q89-4U",
+    mapIds: ["468d7e38db822065"],
     libraries,
   });
   const mapRef = useRef();
@@ -34,11 +34,11 @@ export default function Map(props) {
   }, []);
   const options = {
     styles: mapStyles,
-  }
+  };
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
-    return (
+  return (
     <div className="mapWrapper">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -47,31 +47,32 @@ export default function Map(props) {
         onLoad={onMapLoad}
         options={options}
       >
-        {props.archStyles.map(archStyle => (
-        <div>
-            {archStyle.placesArray.map(place => (
-        <div>
-        <Marker 
-          key={place.marker.lat}
-          position={place.marker}
-          onClick={() => {
-            props.setSelected(place.marker.lat);
-          }}
-          />
-          { props.selected === place.marker.lat && (
-          <InfoWindow 
-          position={place.marker}
-          onCloseClick={() => props.setSelected(null)}
-          style={{ bottom: "45px" }}>
-          <p>{place.placeName}</p>
-          {/* <OutsideClickHandler /> */}
-          </InfoWindow>)}
+        {props.archStyles.map((archStyle) => (
+          <div>
+            {archStyle.placesArray.map((place) => (
+              <div>
+                <Marker
+                  key={place.marker.lat}
+                  position={place.marker}
+                  icon="images/marker.png"
+                  onClick={() => {
+                    props.setSelected(place.marker.lat);
+                  }}
+                />
+                {props.selected === place.marker.lat && (
+                  <InfoWindow
+                    position={place.marker}
+                    onCloseClick={() => props.setSelected(null)}
+                  >
+                    <p>{place.placeName}</p>
+                    {/* <OutsideClickHandler /> */}
+                  </InfoWindow>
+                )}
+              </div>
+            ))}
           </div>
-          ))}
-        </div>
         ))}
       </GoogleMap>
     </div>
   );
-};
-
+}
